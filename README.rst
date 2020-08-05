@@ -20,9 +20,9 @@ using clean test set. In scikit-clean, this looks like:
 .. code-block:: python
 
     from skclean.simulate_noise import flip_labels_uniform
-    from skclean.robust_losses import RobustLR   # Robust Logistic Regression
+    from skclean.models import RobustLR   # Robust Logistic Regression
 
-    X, y = make_classification(n_samples=100,n_features=4)
+    X, y = make_classification(n_samples=200,n_features=4)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.20)
 
     y_train_noisy = flip_labels_uniform(y_train, .3)  # Flip labels of 30% samples
@@ -37,9 +37,10 @@ nicely with Pipeline's API:
 .. code-block:: python
 
     # ---Import scikit-learn stuff----
+    from skclean.simulate_noise import UniformNoise
     from skclean.detectors import KDN
     from skclean.handlers import Filter
-    from skclean.pipeline import Pipeline         # Note: Importing from skclean, not sklearn
+    from skclean.pipeline import Pipeline, make_pipeline  # Importing from skclean, not sklearn
 
 
     clf = Pipeline([

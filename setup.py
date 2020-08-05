@@ -11,7 +11,7 @@ MAINTAINER_EMAIL = 'redoykhan555@gmail.com'
 URL = 'https://github.com/Shihab-Shahriar/skclean'
 LICENSE = 'MIT'
 DOWNLOAD_URL = 'https://github.com/Shihab-Shahriar/skclean'
-VERSION = "0.1.0"
+VERSION = "0.1.0.dev1"
 CLASSIFIERS = ['Intended Audience :: Science/Research',
                'License :: OSI Approved',
                'Programming Language :: Python',
@@ -25,8 +25,8 @@ CLASSIFIERS = ['Intended Audience :: Science/Research',
                'Programming Language :: Python :: 3.8']
 
 INSTALL_REQUIRES = [
-    'pandas',
-    'scikit-learn',
+    'scikit-learn>=0.23',
+    'pandas>=1.0',
 ]
 
 setup(name=DISTNAME,
