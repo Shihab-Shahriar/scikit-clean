@@ -1,0 +1,23 @@
+# TODO: remove pip? pytest . -n 2? Remove doc related stuff
+# when notebooks not run?
+
+name: ci_env
+channels:
+  - anaconda
+  - conda-forge
+  - defaults
+dependencies:
+  - pip
+  - jupyterlab
+  - nbsphinx
+  - pandas
+  - scikit-learn
+  - seaborn
+  - sphinx
+  - pip:
+    - coverage
+    - pytest
+    - pytest-cov
+    - pytest-forked
+    - sphinxcontrib-bibtex
+
