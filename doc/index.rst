@@ -7,10 +7,10 @@ Welcome to scikit-clean's documentation!
 ========================================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Getting Started:
 
-   readme_link
+   intro
 
 .. toctree::
    :maxdepth: 2

@@ -108,25 +108,9 @@ are inspired by, and dircetly borrows code from these libraries.
 We also want to thank the authors of original papers. Here is a list of papers partially \
 or fully implemented by `scikit-clean`:
 
-* Taghi M Khoshgoftaar and Pierre Rebours. Improving software quality prediction by noise filtering techniques. Journal of Computer Science and Technology, 22(3):387–396, 2007.
-
-* Sunghun Kim, Hongyu Zhang, Rongxin Wu, and Liang Gong. Dealing with noise in defect prediction. In 2011 33rd International Conference on Software Engineering (ICSE), 481–490. IEEE, 2011.
-
-* Alexander Hanbo Li and Andrew Martin. Forest-type regression with general losses and robust forest. In International Conference on Machine Learning, 2091–2100. 2017.
-
-* Aditya Krishna Menon, Brendan Van Rooyen, and Nagarajan Natarajan. Learning from binary labels with instance-dependent noise. Machine Learning, 107(8-10):1561–1595, 2018.
-
-* Nagarajan Natarajan, Inderjit S Dhillon, Pradeep K Ravikumar, and Ambuj Tewari. Learning with noisy labels. In Advances in neural information processing systems, 1196–1204. 2013.
-
-* Maryam Sabzevari, Gonzalo Martínez-Muñoz, and Alberto Suárez. A two-stage ensemble method for the detection of class-label noise. Neurocomputing, 275:2374–2383, 2018.
-
-* Michael R Smith, Tony Martinez, and Christophe Giraud-Carrier. An instance level analysis of data complexity. Machine learning, 95(2):225–256, 2014.
-
-* Felipe N Walmsley, George DC Cavalcanti, Dayvid VR Oliveira, Rafael MO Cruz, and Robert Sabourin. An ensemble generation method based on instance hardness. In 2018 International Joint Conference on Neural Networks (IJCNN), 1–8. IEEE, 2018.
-
-* Bianca Zadrozny, John Langford, and Naoki Abe. Cost-sensitive learning by cost-proportionate example weighting. In Third IEEE international conference on data mining, 435–442. IEEE, 2003.
-
-* Zijin Zhao, Lingyang Chu, Dacheng Tao, and Jian Pei. Classification with label noise: a markov chain sampling framework. Data Mining and Knowledge Discovery, 33(5):1468–1504, 2019.
+.. bibliography:: zrefs.bib
+    :list: bullet
+    :cited:
 
 A note about naming
 -----------------------------------------------

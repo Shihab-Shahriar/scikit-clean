@@ -5,13 +5,13 @@ with open("README.rst", "r") as fh:
     LONG_DESCRIPTION = fh.read()
 
 DISTNAME = 'scikit-clean'
-DESCRIPTION = 'A set of algorithms for detecting and handling label noise'
+DESCRIPTION = 'A collection of algorithms for detecting and handling label noise'
 MAINTAINER = 'Shihab Shahriar Khan'
 MAINTAINER_EMAIL = 'redoykhan555@gmail.com'
 URL = 'https://github.com/Shihab-Shahriar/skclean'
 LICENSE = 'MIT'
 DOWNLOAD_URL = 'https://github.com/Shihab-Shahriar/skclean'
-VERSION = "0.1.4"
+VERSION = "0.1.0"
 CLASSIFIERS = ['Intended Audience :: Science/Research',
                'License :: OSI Approved',
                'Programming Language :: Python',
