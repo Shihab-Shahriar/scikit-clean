@@ -5,5 +5,5 @@ from . import models
 from . import pipeline
 from . import simulate_noise
 
-
-__version__ = "0.1.0.dev2"
+# TODO: Remove this __version__ coupling with setup.py
+__version__ = "0.1.2"

@@ -11,7 +11,7 @@ MAINTAINER_EMAIL = 'redoykhan555@gmail.com'
 URL = 'https://github.com/Shihab-Shahriar/scikit-clean'
 LICENSE = 'MIT'
 DOWNLOAD_URL = 'https://github.com/Shihab-Shahriar/scikit-clean'
-VERSION = "0.1.0.dev2"
+VERSION = "0.1.2"
 CLASSIFIERS = ['Intended Audience :: Science/Research',
                'License :: OSI Approved',
                'Programming Language :: Python',

@@ -58,8 +58,8 @@ nicely with Pipeline's API:
 Please see this notebook_ before you begin for a more detailed introduction, \
 and this_ for complete API.
 
-.. _notebook: examples/Introduction%20to%20Scikit-clean.html
-.. _this: api.html
+.. _notebook: https://scikit-clean.readthedocs.io/en/latest/examples/Introduction%20to%20Scikit-clean.html
+.. _this: https://scikit-clean.readthedocs.io/en/latest/api.html
 
 Installation
 ******************
