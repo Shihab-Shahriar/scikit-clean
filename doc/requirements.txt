@@ -1,3 +1,6 @@
-sphinxcontrib-bibtex
-jupyterlab
-nbsphinx
+scikit-learn>=0.23
+pandas>=1.0
+sphinx>=3.1.2
+sphinxcontrib-bibtex>=1.0.0
+nbsphinx>=0.7.1
+jupyterlab>=2.1.5
