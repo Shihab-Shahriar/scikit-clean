@@ -3,13 +3,14 @@ from itertools import product
 import pandas as pd
 from sklearn import clone
 
-from sklearn.datasets import load_iris, make_classification
+from sklearn.datasets import make_classification
 from sklearn.feature_selection import VarianceThreshold
 from sklearn.preprocessing import StandardScaler
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 
 import skclean
+from skclean.utils import load_data
 from skclean.detectors import KDN
 from skclean.pipeline import make_pipeline
 from skclean.simulate_noise import UniformNoise
@@ -88,7 +89,7 @@ ALL_COMBS = INSIDE_PIPE + OUTSIDE_PIPE
 
 ALL_ESTIMATORS = NOISE_SIMULATORS + NOISE_DETECTORS + ALL_COMBS + [PIPELINE]
 
-Xiris, yiris = load_iris(return_X_y=True)
+Xiris, yiris = load_data('iris')
 X, y = make_classification(100, 4)
 
 df = pd.DataFrame(X)

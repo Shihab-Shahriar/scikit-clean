@@ -201,14 +201,15 @@ class CLNI(BaseHandler, ClassifierMixin):
             clean_idx = conf_score > self.threshold
 
             N = len(X) - len(Xt)  # size of A_(j-1) i.e. no of noisy instances detected so far
-            Xt, ytn = Xt[clean_idx], yt[clean_idx]
+            Xa, ya = Xt[clean_idx], yt[clean_idx]
 
-            if len(np.unique(y)) != len(np.unique(yt)):
+            # If new labels have fewer classes than original...
+            if len(np.unique(y)) != len(np.unique(ya)):
                 warnings.warn("One or more of the classes has been completely "
                               "filtered out, stopping iteration.")
                 break
             else:
-                yt = ytn
+                Xt, yt = Xa, ya
 
             if len(X) == len(Xt):
                 warnings.warn("No noisy sample found, stopping at first iteration")
@@ -283,7 +284,15 @@ class IPF(BaseHandler, ClassifierMixin):
             cur_size = len(Xf)
 
             clean_idx = conf_score > .5  # Idx of clean samples
-            Xf, yf = Xf[clean_idx], yf[clean_idx]
+            Xa, ya = Xf[clean_idx], yf[clean_idx]
+
+            # If new labels have fewer classes than original...
+            if len(np.unique(y)) != len(np.unique(ya)):
+                warnings.warn("One or more of the classes has been completely "
+                              "filtered out, stopping iteration.")
+                break
+            else:
+                Xf, yf = Xa, ya
 
             conf_score = self.detector.detect(Xf, yf)  # Calling detect once more than necessary
 
