@@ -8,10 +8,10 @@ DISTNAME = 'scikit-clean'
 DESCRIPTION = 'A collection of algorithms for detecting and handling label noise'
 MAINTAINER = 'Shihab Shahriar Khan'
 MAINTAINER_EMAIL = 'redoykhan555@gmail.com'
-URL = 'https://github.com/Shihab-Shahriar/skclean'
+URL = 'https://github.com/Shihab-Shahriar/scikit-clean'
 LICENSE = 'MIT'
-DOWNLOAD_URL = 'https://github.com/Shihab-Shahriar/skclean'
-VERSION = "0.1.0.dev1"
+DOWNLOAD_URL = 'https://github.com/Shihab-Shahriar/scikit-clean'
+VERSION = "0.1.0.dev2"
 CLASSIFIERS = ['Intended Audience :: Science/Research',
                'License :: OSI Approved',
                'Programming Language :: Python',
@@ -41,6 +41,7 @@ setup(name=DISTNAME,
       zip_safe=False,
       classifiers=CLASSIFIERS,
       packages=find_packages(),
-      install_requires=INSTALL_REQUIRES)
+      install_requires=INSTALL_REQUIRES,
+      include_package_data=True)
 
 

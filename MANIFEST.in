@@ -1,0 +1,6 @@
+recursive-include doc *
+recursive-include skclean/datasets *.csv
+
+include LICENSE
+include README.rst
+include environment.yml
