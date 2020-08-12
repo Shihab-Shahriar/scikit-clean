@@ -62,7 +62,8 @@ def load_data(data_name=None, data_path=None, stats=False):
 
 # TODO: Support resuming inside cross_val_score, use Dask?
 def compare(models: dict, datasets: list, cv, df_path=None, n_jobs=-1,
-            scoring='accuracy', random_state=None, verbose=True, **kwargs):
+            scoring='accuracy', random_state=None, verbose=True,
+            fit_params=None, **kwargs):
     """
     Compare different methods across several datasets, with support for \
     parallelization, reproducibility and automatic resumption. Output is \
@@ -104,6 +105,11 @@ def compare(models: dict, datasets: list, cv, df_path=None, n_jobs=-1,
         existing random state of methods even if it's already present.
 
     verbose : Controls the verbosity level
+
+    fit_params : dict, default=None
+        Parameters to send to fit() method of each classifiers. Keys should be
+        classifier names, same as in `models`, and values themselves are ``dict``
+        of parameter-name, value pairs.
 
     kwargs : Other parameters for ``cross_val_score``.
 
@@ -148,9 +154,10 @@ def compare(models: dict, datasets: list, cv, df_path=None, n_jobs=-1,
             elif verbose:
                 print(f"Starting: {data}, {name} at {ctime()[-14:-4]}")
 
+            fit_par = None if fit_params is None else fit_params.get(name, None)
             start = perf_counter()
-            res = cross_val_score(clf, X, Y, cv=cv, n_jobs=n_jobs,
-                                  scoring=scoring, error_score='raise', **kwargs)
+            res = cross_val_score(clf, X, Y, cv=cv, n_jobs=n_jobs, scoring=scoring,
+                                  error_score='raise', fit_params=fit_par, **kwargs)
             df.at[data, name] = res.mean()
             elapsed_time = _display_time(perf_counter() - start)
             if verbose:
