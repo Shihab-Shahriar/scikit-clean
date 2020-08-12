@@ -112,7 +112,7 @@ def compare(models: dict, datasets: list, cv, df_path=None, n_jobs=-1,
     rns = check_random_state(random_state)
     cv = check_cv(cv)
     cv.random_state = rns.randint(100)
-    seeds = iter(rns.randint(10 ** 8, size=len(models)*len(datasets)))
+    seeds = iter(rns.randint(10 ** 8, size=len(models) * len(datasets)))
 
     try:
         df = pd.read_csv(df_path, index_col=0)
@@ -126,7 +126,7 @@ def compare(models: dict, datasets: list, cv, df_path=None, n_jobs=-1,
         if type(data) == str:
             X, Y = load_data(data, stats=verbose)
         else:
-            data, (X, Y) = data   # Nested tuple of (name, (data, target))
+            data, (X, Y) = data  # Nested tuple of (name, (data, target))
 
         if data not in df.index:
             df.loc[data, :] = None
