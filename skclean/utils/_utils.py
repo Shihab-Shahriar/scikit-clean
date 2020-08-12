@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from time import ctime, perf_counter
 
@@ -33,13 +34,20 @@ def _display_time(seconds, granularity=4):
     return ', '.join(result[:granularity])
 
 
+ROOT_DATASET_DIR = Path(__file__).parent.parent / 'datasets'
+
+
 # TODO: Add support for downloading dataset
-def load_data(dataset, stats=False):
-    path = Path(__file__).parent.parent / f'datasets/{dataset}.csv'
+def load_data(data_name=None, data_path=None, stats=False):
+    if data_name is not None:
+        path = os.path.join(ROOT_DATASET_DIR, f"{data_name}.csv")
+    else:
+        path = data_path
+
     try:
         df = pd.read_csv(path, header=None)
     except FileNotFoundError as e:
-        raise FileNotFoundError(f"Dataset file {dataset} does not exist")
+        raise e
 
     df = df.astype('float64')
     data = df.values
@@ -48,7 +56,7 @@ def load_data(dataset, stats=False):
     X = MinMaxScaler().fit_transform(X)
     if stats:
         labels, freq = np.unique(Y, return_counts=True)
-        print(f"{dataset}, {X.shape}, {len(labels)}, {freq.min() / freq.max():.3f}\n")
+        print(f"{X.shape}, {len(labels)}, {freq.min() / freq.max():.3f}\n")
     return shuffle(X, Y, random_state=42)
 
 
