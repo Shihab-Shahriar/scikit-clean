@@ -2,6 +2,7 @@ import warnings
 
 import numpy as np
 from sklearn import clone
+from sklearn.base import BaseEstimator
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
@@ -127,6 +128,7 @@ class MCS(BaseDetector):
         return conf_score / self.n_steps
 
 
+# TODO: Allow both hard & soft voting
 class InstanceHardness(BaseDetector):
     """
     A set of classifiers are used to predict labels of each sample
@@ -136,8 +138,7 @@ class InstanceHardness(BaseDetector):
 
     Parameters
     --------------
-    classifiers : list, default=None
-        Classifiers used to predict sample labels.
+    classifiers : A single or list of classifier instances supporting sklearn API, default=None
         If None, four classifiers are used: `GaussianNB`,
         `DecisionTreeClassifier`, `KNeighborsClassifier` and `LogisticRegression`.
 
@@ -167,6 +168,9 @@ class InstanceHardness(BaseDetector):
         if self.classifiers is None:
             self.classifiers = InstanceHardness.DEFAULT_CLFS
 
+        if isinstance(self.classifiers, BaseEstimator):
+            self.classifiers = [self.classifiers]
+
         cv = self.cv
         if cv is None or type(cv) == int:
             n_splits = self.cv or 5
@@ -192,12 +196,19 @@ class InstanceHardness(BaseDetector):
 
 class RandomForestDetector(BaseDetector):
     """
-    Trains a Random Forest first- for each sample, only trees that
-    didn't select it for training (via bootstrapping) are used to
-    predict it's label. Percentage of trees that correctly predicted
-    the label is the sample's `conf_score`.
+    Uses a Random Forest classifer to detect mislabeled samples. In 'bootstrap'
+    method- for each sample, only trees that didn't select it for training
+    (via bootstrapping) are used to predict it's label. The 'cv' method uses a
+    K-fold cross-validation approach, where a fresh Random Forest is trained for
+    each fold, using remaining k-1 folds as training data. In both cases,
+    percentage of trees that correctly predicted the label of a sample is its
+    `conf_score`.
 
     See :cite:`twostage18` for details.
+
+    Parameters
+    --------------
+    method : str, default='bootstrap'
 
     n_estimators : int, default=101
         No of trees in Random Forest.
@@ -213,10 +224,13 @@ class RandomForestDetector(BaseDetector):
     """
 
     # TODO: Allow other tree ensembles
-    def __init__(self, n_estimators=101, sampling_ratio=None, n_jobs=1, random_state=None):
+    def __init__(self, method='bootstrap', n_estimators=101, sampling_ratio=None,
+                 cv=None, n_jobs=1, random_state=None):
         super().__init__(n_jobs=n_jobs, random_state=random_state)
+        self.method = method
         self.n_estimators = n_estimators
         self.sampling_ratio = sampling_ratio
+        self.cv = cv
 
     def detect(self, X, y):
         X, y = self._validate_data(X, y)
@@ -225,5 +239,23 @@ class RandomForestDetector(BaseDetector):
                                     max_samples=self.sampling_ratio, n_jobs=self.n_jobs,
                                     random_state=self.random_state).fit(X, y)
 
-        conf_score = rf.oob_decision_function_[range(len(X)), y]
-        return conf_score
+        if self.method == 'bootstrap':
+            conf_score = rf.oob_decision_function_[range(len(X)), y]
+            return conf_score
+
+        if self.method != 'cv':
+            raise ValueError("Only 'cv' and 'bootstrap' methods are allowed.")
+
+        cv = self.cv
+        if cv is None or type(cv) == int:
+            n_splits = self.cv or 5
+            cv = StratifiedKFold(n_splits=n_splits, shuffle=True,
+                                 random_state=self.random_state)
+
+        conf_score = np.zeros_like(y, dtype='float64')
+        for train_idx, test_idx in cv.split(X, y):
+            clf = clone(rf).fit(X[train_idx], y[train_idx])
+            for tree in clf.estimators_:
+                yp = tree.predict(X[test_idx])
+                conf_score[test_idx] += (yp == y[test_idx])
+        return conf_score / rf.n_estimators
