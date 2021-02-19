@@ -16,9 +16,9 @@ def _check_data_params(obj, X, y, conf_score):
             v.set_params(random_state=rns.randint(10**8))
 
     # Parallelization
-    if obj.classifier and 'n_jobs' in obj.classifier.get_params():
+    if obj.classifier is not None and 'n_jobs' in obj.classifier.get_params():
         obj.classifier.set_params(n_jobs=obj.n_jobs)
-    if obj.detector and 'n_jobs' in obj.detector.get_params():
+    if obj.detector is not None and 'n_jobs' in obj.detector.get_params():
         obj.detector.set_params(n_jobs=obj.n_jobs)
 
     if conf_score is None and obj.detector is None:

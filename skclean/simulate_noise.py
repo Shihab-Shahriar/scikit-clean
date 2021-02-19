@@ -26,7 +26,8 @@ def _flip_idx(Y, target_idx, random_state=None):
     return yn
 
 
-def flip_labels_uniform(Y: np.ndarray, noise_level: float, *, random_state=None, exact=True):
+def flip_labels_uniform(Y: np.ndarray, noise_level: float, *, random_state=None,
+                        exact=True, label_propor=False):
     """
     All labels are equally likely to be flipped, irrespective of their true \
     label or feature. The new (noisy) label is also chosen with uniform \
@@ -43,9 +44,15 @@ def flip_labels_uniform(Y: np.ndarray, noise_level: float, *, random_state=None,
     random_state : int, default=None
         Set this value for reproducibility
 
-    exact: bool default=True
+    exact: bool, default=True
         If True, the generated noise will be as close to `noise_level` as possible.
         The approximate version (i.e. exact=False) is faster but less accurate.
+
+    label_propor: bool, default=False
+        Computes maximum tolerable noise level based on number of unique labels.
+        Actual noise_level is computed wr.t. to that. That is, if there are `L` unique
+        labels, percentage of labels to actually get flipped is : \
+        ``noise_level * (L-1/L)``.
 
     Returns
     -----------
@@ -53,9 +60,12 @@ def flip_labels_uniform(Y: np.ndarray, noise_level: float, *, random_state=None,
         1-D array of flipped labels
     """
 
+    labels = np.unique(Y)
+    n_labels = len(labels)
+    if label_propor:
+        noise_level = noise_level * ((n_labels-1)/n_labels)
+
     if not exact:
-        labels = np.unique(Y)
-        n_labels = len(labels)
         lcm = np.full((n_labels, n_labels), noise_level / (n_labels - 1))
         np.fill_diagonal(lcm, 1 - noise_level)
         return flip_labels_cc(Y, lcm, random_state=random_state)
@@ -139,17 +149,24 @@ class UniformNoise(NoiseSimulator):
 
     random_state : int, default=None
         Set this value for reproducibility
+
+    label_propor: bool, default=False
+        Computes maximum tolerable noise level based on number of unique labels.
+        Actual noise_level is computed wr.t. to that. That is, if there are `L` unique
+        labels, percentage of labels to actually get flipped is : \
+        ``noise_level * (L-1/L)``.
     """
 
-    def __init__(self, noise_level, exact=True, random_state=None):
+    def __init__(self, noise_level, exact=True, random_state=None, label_propor=False):
         super().__init__(random_state=random_state)
         self.noise_level = noise_level
         self.exact = exact
+        self.label_propor = label_propor
 
     def simulate_noise(self, X, y):
         X, y = self._validate_data(X, y)
         yn = flip_labels_uniform(y, self.noise_level, random_state=self.random_state,
-                                 exact=self.exact)
+                                 exact=self.exact, label_propor=self.label_propor)
         return X, yn
 
 

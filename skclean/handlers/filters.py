@@ -144,7 +144,7 @@ class FilterCV(BaseHandler, ClassifierMixin):
                 accs.append(acc)
 
             avg_acc = sum(accs) / len(accs) if len(accs) > 0 else 0.0
-            print(point, avg_acc)
+            #print(point, avg_acc)
             if avg_acc > best_acc:
                 best_acc = avg_acc
                 best_cutoff = point
