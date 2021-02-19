@@ -20,7 +20,6 @@ SEED = 39
 dummy = DecisionTreeClassifier(max_depth=4, random_state=SEED)
 
 
-
 NOISE_SIMULATORS = [
     skclean.simulate_noise.UniformNoise(.2),
     skclean.simulate_noise.CCNoise(.3),
