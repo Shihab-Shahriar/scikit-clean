@@ -79,7 +79,7 @@ copy/paste relevant code into your project.
 
 Citation 
 ********** 
-If you've using this library for research, please consider citing: 
+If you use this library for research, please consider citing: 
 
 *Khan, Shihab Shahriar, Nishat Tasnim Niloy, Md Aquib Azmain, and Ahmedul Kabir. "Impact of Label Noise and Efficacy of Noise Filters in Software Defect Prediction." In SEKE, pp. 347-352. 2020.* 
 
