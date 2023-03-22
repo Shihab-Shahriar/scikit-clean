@@ -77,6 +77,11 @@ If you intend to modify the code, install in editable mode::
 If you're only interested in small part of this library, say one or two algorithms, feel free to simply \
 copy/paste relevant code into your project.
 
+Citation 
+********** 
+If you've using this library for research, please consider citing: 
+`` Khan, Shihab Shahriar, Nishat Tasnim Niloy, Md Aquib Azmain, and Ahmedul Kabir. "Impact of Label Noise and Efficacy of Noise Filters in Software Defect Prediction." In SEKE, pp. 347-352. 2020. ``
+
 Alternatives
 **************
 There are several open source tools to handle label noise, some of them are: \
