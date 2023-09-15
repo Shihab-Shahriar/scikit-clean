@@ -109,8 +109,8 @@ for practitioners/ engineers than `scikit-clean`.
 Credits
 **************
 
-We want to `scikit-learn`, `imbalance-learn` and `Cleanlab`, these implemntations \
-are inspired by, and dircetly borrows code from these libraries.
+We want to thank `scikit-learn`, `imbalance-learn` and `Cleanlab`, these implementations \
+are inspired by these libraries.
 
 We also want to thank the authors of original papers. Here is a list of papers partially \
 or fully implemented by `scikit-clean`:
